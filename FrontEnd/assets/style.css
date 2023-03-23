@@ -186,3 +186,155 @@ footer nav ul {
 	margin: 2em
 }
 
+.category-selector {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	list-style: none;
+	padding: 0;
+	margin: 20px 0;
+  }
+  
+  .category-selector li {
+	cursor: pointer;
+	background-color: #E5E5E5;
+	padding: 10px 20px;
+	margin: 0 10px;
+	border-radius: 20px; /* Arrondir les contours */
+	font-size: 14px;
+	font-weight: bold;
+  }
+  
+  .category-selector li:hover {
+	background-color: #D0D0D0;
+  }
+
+  .category-selector li.selected {
+	background-color: #1D6154;
+	color: #ffffff;
+  }
+
+  .modify {
+	  cursor: pointer;
+  }
+
+/**** MODAL ****/
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+
+.modal-photo {
+    border-radius: 10px;
+    position: fixed;
+    background-color: #fefefe;
+    top: 33.33%; /* 1/3 de la hauteur totale de l'écran */
+    left: 50%; /* Centré horizontalement */
+    transform: translateY(-50%) translateX(-50%); /* Ajuste la position pour centrer correctement la fenêtre contextuelle */
+    border: 1px solid #888;
+    width: 630px;
+    height: 731px;
+    overflow: auto;
+}
+
+
+.modal-content {
+	padding: 20px;
+}
+
+.modal-content h2 {
+	text-align: center;
+	margin: 20px 0;
+}
+
+.close {
+	position: absolute;
+	top: 15px;
+	right: 20px;
+	color: #aaa;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.modal-items {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Crée un layout avec 5 colonnes */
+    gap: 10px; /* Espacement entre les images */
+    padding: 25px;
+}
+
+.modalItem {
+    width: calc(20% - 20px); /* Ajustez la largeur pour tenir compte des marges */
+    margin: 10px; /* Ajoutez des marges autour des éléments .modalItem */
+}
+
+.modalItem img {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+.modalItem span {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.modal-content .modal-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.modal-content .modal-items img {
+    width: 100px; /* ajustez cette valeur pour modifier la taille des images */
+    height: auto;
+    object-fit: cover;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    border-top: 1px solid #B3B3B3;
+    padding-top: 20px;
+}
+
+.modal-buttons button {
+    background-color: #1D6154;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #1D6154;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.modal-buttons button:hover {
+    background-color: #147a50;
+    border-color: #147a50;
+}
+
