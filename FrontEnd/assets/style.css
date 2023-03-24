@@ -355,3 +355,29 @@ footer nav ul {
     border-color: #147a50;
 }
 
+.trash-can {
+	font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.trash-can:hover {
+    color: #ff0000;
+}
+
+.trash-can-container {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+    background-color: #000;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+}

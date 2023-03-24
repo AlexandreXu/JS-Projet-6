@@ -85,13 +85,28 @@ function displayModal(works) {
         works.forEach(work => {
             const modalItem = document.createElement("div");
             modalItem.className = "modalItem";
+            modalItem.style.position = "relative"; // Ligne pour permettre la position absolue de la corbeille
+    
+            // Lignes pour créer et ajouter l'icône de corbeille
+            const trashCanContainer = document.createElement("div");
+            trashCanContainer.className = "trash-can-container";
+    
+            const trashCan = document.createElement("i");
+            trashCan.className = "far fa-trash-alt trash-can";
+    
+            trashCanContainer.appendChild(trashCan);
+            modalItem.appendChild(trashCanContainer);
 
             const img = document.createElement("img");
             img.src = work.imageUrl;
             img.alt = work.title;
-
+    
             const title = document.createElement("figcaption");
             title.textContent = "Éditer";
+            title.className = "edit-caption";
+            title.addEventListener("click", () => {
+                handleCaptionEditing(title, work);
+            });
 
             title.addEventListener("click", () => {
                 const existingEditInput = modalItem.querySelector(".edit-input");
