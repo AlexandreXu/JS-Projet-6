@@ -1,6 +1,7 @@
 let listWorks = [];
 let WorksFiltered = [];
 let currentSelectedCategoryId = null;
+let modalInitialized = false;
 
 function fetchCategories() {
     fetch('http://localhost:5678/api/categories')
@@ -77,6 +78,9 @@ function displayModal(works) {
     modify.onclick = function () {
         modal.style.display = "block";
 
+        // Videz le contenu du conteneur .modal-items avant d'ajouter de nouveaux éléments
+        modalItemsContainer.innerHTML = '';
+
         // Ajoutez les images des works dans le conteneur .modal-items
         works.forEach(work => {
             const modalItem = document.createElement("div");
@@ -87,7 +91,33 @@ function displayModal(works) {
             img.alt = work.title;
 
             const title = document.createElement("figcaption");
-            title.textContent = work.title;
+            title.textContent = "Éditer";
+
+            title.addEventListener("click", () => {
+                const existingEditInput = modalItem.querySelector(".edit-input");
+                const existingSaveButton = modalItem.querySelector(".save-button");
+
+                if (!existingEditInput && !existingSaveButton) {
+                    const editInput = document.createElement("input");
+                    editInput.type = "text";
+                    editInput.value = work.title;
+                    editInput.className = "edit-input";
+
+                    const saveButton = document.createElement("button");
+                    saveButton.textContent = "Sauvegarder";
+                    saveButton.className = "save-button";
+
+                    saveButton.addEventListener("click", () => {
+                        work.title = editInput.value;
+                        title.textContent = editInput.value;
+                        editInput.remove();
+                        saveButton.remove();
+                    });
+
+                    modalItem.appendChild(editInput);
+                    modalItem.appendChild(saveButton);
+                }
+            });
 
             modalItem.appendChild(img);
             modalItem.appendChild(title);
@@ -103,7 +133,6 @@ function displayModal(works) {
         if (event.target == modal) modal.style.display = "none";
     };
 }
-
 
 
 window.addEventListener('DOMContentLoaded', () => {
