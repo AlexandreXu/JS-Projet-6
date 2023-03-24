@@ -23,13 +23,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 })
                 .then((data) => {
-                    // Stockez le token d'authentification et redirigez l'utilisateur vers la page d'édition ou la page principale
+                    // Stock le token d'authentification et redirige l'utilisateur vers la page d'édition ou la page principale
                     localStorage.setItem("authToken", data.token);
                     window.location.href = "index.html";
                 })
                 .catch((error) => {
                     console.error("Erreur:", error);
-                    // Affichez un message d'erreur à l'utilisateur
+                    // Affiche un message d'erreur à l'utilisateur
                     const errorMessageElement = document.getElementById("error-message");
                     errorMessageElement.textContent = "Erreur lors de la connexion. Veuillez vérifier vos identifiants et réessayer.";
                     errorMessageElement.style.display = "block";

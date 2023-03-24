@@ -97,6 +97,20 @@ function displayModal(works) {
             trashCanContainer.appendChild(trashCan);
             modalItem.appendChild(trashCanContainer);
 
+            // Ajoute le code pour gérer le clic sur la corbeille ici
+            trashCan.addEventListener('click', () => {
+                const confirmation = confirm('Voulez-vous vraiment supprimer cette image et sa légende ?');
+                if (confirmation) {
+                    // Supprime l'image et sa légende du DOM
+                    modalItem.remove();
+                    // Supprime l'image et sa légende de la liste des works
+                    listWorks = listWorks.filter(item => item.id !== work.id);
+                    // Mettre à jour la galerie avec les works filtrés
+                    updateGalleryWithFilteredWorks(currentSelectedCategoryId);
+                    console.log('Image et légende supprimées');
+                }
+            });
+
             const img = document.createElement("img");
             img.src = work.imageUrl;
             img.alt = work.title;
@@ -107,7 +121,6 @@ function displayModal(works) {
             title.addEventListener("click", () => {
                 handleCaptionEditing(title, work);
             });
-
             title.addEventListener("click", () => {
                 const existingEditInput = modalItem.querySelector(".edit-input");
                 const existingSaveButton = modalItem.querySelector(".save-button");
