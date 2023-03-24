@@ -272,29 +272,46 @@ footer nav ul {
 	cursor: pointer;
 }
 
-.modal-items {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Crée un layout avec 5 colonnes */
-    gap: 10px; /* Espacement entre les images */
-    padding: 25px;
+.modalItem {
+    display: flex;
+    flex-direction: column;
+    width: calc(20% - 20px);
+    margin: 10px;
 }
+
 
 .modalItem {
-    width: calc(20% - 20px); /* Ajustez la largeur pour tenir compte des marges */
-    margin: 10px; /* Ajoutez des marges autour des éléments .modalItem */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(20% - 20px);
+    margin: 10px;
 }
 
+
 .modalItem img {
-	height: 100%;
-	width: 100%;
-	position: relative;
+    width: 100%;
+    max-height: 150px; /* Ajustez cette valeur pour modifier la hauteur maximale des images */
+    object-fit: contain;
 }
+
 
 .modalItem span {
 	position: absolute;
 	top: 5px;
 	right: 5px;
 }
+
+.modalItem figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    overflow: hidden;
+    margin-top: 10px;
+    text-align: center;
+}
+
 
 .modal-content .modal-items {
     display: flex;
