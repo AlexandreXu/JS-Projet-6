@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Sophie Bluel - Architecte d'intérieur</title>
@@ -8,84 +9,127 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
-          rel="stylesheet">
+        rel="stylesheet">
     <meta name="description" content="">
     <link rel="stylesheet" href="./assets/style.css">
     <script src="assets/scripts/script.js"></script>
 </head>
+
 <body>
-<header>
-    <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
-    <nav>
-        <ul>
-            <li>projets</li>
-            <li>contact</li>
-            <li class="connexion"><a href="login.html">login</a></li>
-            <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-        </ul>
-    </nav>
+    <header>
+        <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+        <nav>
+            <ul>
+                <li>projets</li>
+                <li>contact</li>
+                <li class="connexion"><a href="login.html">login</a></li>
+                <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+            </ul>
+        </nav>
 
-</header>
-<main>
-    <section id="introduction">
-        <figure>
-            <img src="./assets/images/sophie-bluel.png" alt="">
-        </figure>
-        <article>
-            <h2>Designer d'espace</h2>
-            <p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison
-                finale du chantier.</p>
-            <p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les
-                couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier
-                sera assuré dans le souci du détail, le respect du planning et du budget.</p>
-            <p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG,
-                décorateur(trice)</p>
-        </article>
-    </section>
-    <section id="portfolio">
-        <div class="my-projects">
-            <h2>Mes Projets</h2>
-        </div>
-        <ul class="category-selector">
+    </header>
+    <main>
+        <section id="introduction">
+            <figure>
+                <img src="./assets/images/sophie-bluel.png" alt="">
+            </figure>
+            <article>
+                <h2>Designer d'espace</h2>
+                <p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison
+                    finale du chantier.</p>
+                <p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les
+                    couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du
+                    chantier
+                    sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+                <p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG,
+                    décorateur(trice)</p>
+            </article>
+        </section>
+        <section id="portfolio">
+            <div class="my-projects">
+                <h2>Mes Projets</h2>
+            </div>
+            <ul class="category-selector">
 
-        </ul>
-        <div class="gallery">
-        </div>
-    </section>
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Vous avez un projet ? Discutons-en !</p>
-        <form action="#" method="post">
-            <label for="name">Nom</label>
-            <input type="text" name="name" id="name">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email">
-            <label for="message">Message</label>
-            <textarea name="message" id="message" cols="30" rows="10"></textarea>
-            <input type="submit" value="Envoyer">
-        </form>
-    </section>
-    <div id="myModal" class="modal">
-        <div class="modal-photo">
-            <i class="trash-can fas fa-trash" id="trash-can"></i>
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Galerie photo</h2>
-                <div class="modal-items"></div>
-                <div class="modal-buttons">
-                    <button class="add-photo">Ajouter une photo</button>
-                    <button class="delete-gallery">Supprimer la galerie</button>
+            </ul>
+            <div class="gallery">
+            </div>
+        </section>
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>Vous avez un projet ? Discutons-en !</p>
+            <form action="#" method="post">
+                <label for="name">Nom</label>
+                <input type="text" name="name" id="name">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email">
+                <label for="message">Message</label>
+                <textarea name="message" id="message" cols="30" rows="10"></textarea>
+                <input type="submit" value="Envoyer">
+            </form>
+        </section>
+        <div id="myModal" class="modal">
+            <div class="modal-photo">
+                <i class="trash-can fas fa-trash" id="trash-can"></i>
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Galerie photo</h2>
+                    <div class="modal-items"></div>
+                    <div class="modal-buttons">
+                        <button class="add-photo">Ajouter une photo</button>
+                        <button class="delete-gallery">Supprimer la galerie</button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div id="myModalAdd" class="modal">
+            <div class="modal-photo-add">
+                <div class="modal-content-add">
+                    <div>
+                        <span class="arrow-back">BACK</span>
+                        <span class="close-add">&times;</span>
+                    </div>
+                    <h2>Ajout photo</h2>
+                    <div class="add-photo-container" style="background-color: #E8F1F6;">
+                        <input type="file" id="file-input" accept="image/png, image/jpeg" style="display:none;" />
+                        <i class="far fa-image"></i>
+                        <label for="file-input" class="add-photo-button" style="color: #306685;">+ Ajouter photo</label>
+                        <p class="photo-format">jpg, png: 4mo max</p>
+                    </div>
+                    <label for="title" class="modal-photo-add-title-label" style="color: #3D3D3D;">Titre</label>
+                    <input type="text" id="title" name="title" class="modal-photo-add-title-input" placeholder="">
+    
+                    <form id="add-photo-form">
+                        <label for="category">Catégorie :</label>
+                        <select id="category" name="category" required>
+                        </select>
+    
+                        <!-- Vous pouvez supprimer cette partie si vous ne souhaitez pas utiliser l'URL de l'image -->
+                        <label for="image-url">URL de l'image :</label>
+                        <input type="file" id="image-url" name="image-url" required>
+                        <!-- Fin de la partie à supprimer -->
+    
+                        <button type="submit">Ajouter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <nav>
+            <ul>
+                <li>Mentions Légales</li>
+            </ul>
+        </nav>
+    </footer>
+
+    <div id="image-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="enlarged-image" src="" alt="">
+        </div>
     </div>
-</main>
-<footer>
-    <nav>
-        <ul>
-            <li>Mentions Légales</li>
-        </ul>
-    </nav>
-</footer>
 </body>
+
 </html>

@@ -2,6 +2,9 @@ let listWorks = [];
 let WorksFiltered = [];
 let currentSelectedCategoryId = null;
 let modalInitialized = false;
+const addPhotoButton = document.querySelector('.add-photo');
+const addPhotoModal = document.getElementById('add-photo-modal');
+const previousButton = document.querySelector('.previous');
 
 function fetchCategories() {
     fetch('http://localhost:5678/api/categories')
@@ -78,29 +81,28 @@ function displayModal(works) {
     modify.onclick = function () {
         modal.style.display = "block";
 
-        // Videz le contenu du conteneur .modal-items avant d'ajouter de nouveaux éléments
+        // Vide le contenu du conteneur .modal-items avant d'ajouter de nouveaux éléments
         modalItemsContainer.innerHTML = '';
 
-        // Ajoutez les images des works dans le conteneur .modal-items
+        // Ajoute les images des works dans le conteneur .modal-items
         works.forEach(work => {
             const modalItem = document.createElement("div");
             modalItem.className = "modalItem";
             modalItem.style.position = "relative"; // Ligne pour permettre la position absolue de la corbeille
-    
+
             // Lignes pour créer et ajouter l'icône de corbeille
             const trashCanContainer = document.createElement("div");
             trashCanContainer.className = "trash-can-container";
-    
-            const trashCan = document.createElement("i");
-            trashCan.className = "far fa-trash-alt trash-can";
-    
-            trashCanContainer.appendChild(trashCan);
+            trashCanContainer.innerHTML = '<i class="far fa-trash-alt trash-can"></i>';
+
             modalItem.appendChild(trashCanContainer);
 
-            // Ajoute le code pour gérer le clic sur la corbeille ici
-            trashCan.addEventListener('click', () => {
+            // Gestion du clic sur la corbeille ici
+            trashCanContainer.addEventListener('click', () => {
                 const confirmation = confirm('Voulez-vous vraiment supprimer cette image et sa légende ?');
                 if (confirmation) {
+                    console.log(work.id);
+                    deleteWork(work.id)
                     // Supprime l'image et sa légende du DOM
                     modalItem.remove();
                     // Supprime l'image et sa légende de la liste des works
@@ -114,7 +116,7 @@ function displayModal(works) {
             const img = document.createElement("img");
             img.src = work.imageUrl;
             img.alt = work.title;
-    
+
             const title = document.createElement("figcaption");
             title.textContent = "Éditer";
             title.className = "edit-caption";
@@ -162,13 +164,103 @@ function displayModal(works) {
     };
 }
 
+function deleteWork(id) {
+    try {
+        const response = fetch(
+            `http://localhost:5678/api/works/${id}`,
+            {
+                method: 'DELETE',
+                headers: {'Authorization': `Bearer ${window.localStorage.getItem('authToken')}`}
+            }
+        )
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function addWork() {
+    try {
+        const formData = new FormData();
+        const title = document.querySelector('#title')
+        const category = document.querySelector('#category')
+        const image = document.querySelector('#image-url')
+
+        formData.append('title', title.value);
+        formData.append('category', category.value);
+        formData.append('image', image.files[0]);
+
+        const response = fetch(
+            `http://localhost:5678/api/works`,
+            {
+                body: formData,
+                method: 'POST',
+                headers: {'Authorization': `Bearer ${window.localStorage.getItem('authToken')}`}
+            }
+        ).then((response)=> {
+            // CHECK SI OK, SI OK ADD PHOTO EN TEMPS REEL
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function displayModalAdd() {
+    const modal = document.querySelector("#myModal");
+    const modalAdd = document.querySelector("#myModalAdd");
+    const close = document.querySelector(".close-add");
+    const arrowBack = document.querySelector(".arrow-back");
+    const addPhotoButton = document.querySelector('.add-photo');
+    const formSubmit = document.querySelector('#add-photo-form');
+    const categories = document.querySelector('#category');
+
+
+    addPhotoButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+        modalAdd.style.display = 'block';
+    })
+
+    arrowBack.addEventListener('click', () => {
+        modal.style.display = 'block';
+        modalAdd.style.display = 'none';
+    })
+
+    close.addEventListener('click', () => {
+        modalAdd.style.display = 'none';
+    })
+
+    fetch('http://localhost:5678/api/categories')
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Erreur lors de la récupération des données');
+            }
+        })
+        .then((categoriesData) => {
+            categoriesData.map((category) => {
+                // Create Option with category
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                categories.appendChild(option);
+            })
+        })
+        .catch((error) => {
+            console.error('Erreur :', error);
+        });
+
+    formSubmit.addEventListener('submit', (e) => {
+        e.preventDefault();
+        addWork(new FormData(formSubmit))
+    });
+}
 
 window.addEventListener('DOMContentLoaded', () => {
     fetchCategories();
     fetchWorks();
     checkAuth();
+    displayModalAdd()
 });
-
 
 function handleFilters() {
     const categoryItems = document.querySelectorAll('.category-selector li');
@@ -206,6 +298,15 @@ function updateGalleryWithFilteredWorks(categoryId) {
         img.src = work.imageUrl;
         img.alt = work.title;
 
+        // Ajoute cet événement "click" sur l'image
+        img.addEventListener('click', () => {
+            const imageModal = document.querySelector('#image-modal');
+            const enlargedImage = document.querySelector('#enlarged-image');
+            enlargedImage.src = img.src;
+            enlargedImage.alt = img.alt;
+            imageModal.style.display = 'block';
+        });
+
         const figcaption = document.createElement('figcaption');
         figcaption.textContent = work.title;
 
@@ -214,27 +315,4 @@ function updateGalleryWithFilteredWorks(categoryId) {
 
         gallery.appendChild(figure);
     });
-}
-
-function createWorkCards(works) {
-    const cardsContainer = document.createElement('div');
-    cardsContainer.className = 'gallery modal-items';
-
-    works.forEach(work => {
-        const figure = document.createElement('figure');
-        figure.dataset.id = work.id;
-
-        const img = document.createElement('img');
-        img.src = work.imageUrl;
-        img.alt = work.title;
-
-        const figcaption = document.createElement('figcaption');
-        figcaption.textContent = work.title;
-
-        figure.appendChild(img);
-        figure.appendChild(figcaption);
-        cardsContainer.appendChild(figure);
-    });
-
-    return cardsContainer;
 }
