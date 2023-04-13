@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha384-r28riVz9dQ11W7V3J0oNMz+lMzutzGwW1Rl38ZOJxNH5e5IbDg7P8MvHHzCy4WIw" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
         rel="stylesheet">
     <meta name="description" content="">
@@ -16,6 +18,11 @@
 </head>
 
 <body>
+    <div class="editing-bar">
+        <i class="fas fa-pen-to-square"></i>
+        <span>Mode édition</span>
+        <button class="publish-changes">Publier les changements</button>
+    </div>
     <header>
         <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
         <nav>
@@ -84,32 +91,30 @@
         </div>
 
         <div id="myModalAdd" class="modal">
-            <div class="modal-photo-add">
+            <div id="modal-photo-add" class="modal-photo-add">
                 <div class="modal-content-add">
-                    <div>
-                        <span class="arrow-back">BACK</span>
-                        <span class="close-add">&times;</span>
+                    <span class="close close-add">&times;</span>
+                    <span class="arrow-back"><i class="fas fa-arrow-left"></i></span>
+                    <div class="title-container">
+                        <h2>Ajout photo</h2>
                     </div>
-                    <h2>Ajout photo</h2>
-                    <div class="add-photo-container" style="background-color: #E8F1F6;">
-                        <input type="file" id="file-input" accept="image/png, image/jpeg" style="display:none;" />
+                    <div class="add-photo-container">
+                        <input type="file" id="image-url" accept="image/png, image/jpeg" style="display:none;" />
                         <i class="far fa-image"></i>
-                        <label for="file-input" class="add-photo-button" style="color: #306685;">+ Ajouter photo</label>
+                        <img id="file-preview">
+                        <label for="image-url" class="add-photo-button" style="color: #306685;">+ Ajouter photo</label>
                         <p class="photo-format">jpg, png: 4mo max</p>
                     </div>
-                    <label for="title" class="modal-photo-add-title-label" style="color: #3D3D3D;">Titre</label>
-                    <input type="text" id="title" name="title" class="modal-photo-add-title-input" placeholder="">
-    
-                    <form id="add-photo-form">
-                        <label for="category">Catégorie :</label>
-                        <select id="category" name="category" required>
-                        </select>
-                        <label for="image-url">URL de l'image :</label>
-                        <input type="file" id="image-url" name="image-url" required>
-                        <button type="submit">Ajouter</button>
-                    </form>
+                    <label class="modal-photo-add-title-label" for="modal-photo-add-title">Titre :</label>
+                    <input class="modal-photo-add-title-input" id="modal-photo-add-title" type="text" name="title">
+                    <label for="category" class="modal-photo-add-title-label" style="color: #3D3D3D;">Catégorie
+                        :</label>
+                    <select id="category" name="category" required class="modal-photo-add-title-input"></select>
+                    <div class="separator"></div>
+                    <button type="submit" class="submit-photo">Valider</button>
                 </div>
             </div>
+
         </div>
     </main>
     <footer>

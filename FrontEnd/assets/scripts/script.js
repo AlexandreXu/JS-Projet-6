@@ -55,22 +55,39 @@ function fetchWorks() {
 
 function checkAuth() {
     const loginButton = document.querySelector('.connexion');
+    const editingBar = document.querySelector('.editing-bar');
+    const body = document.querySelector('body');
+    
     if (window.localStorage.getItem('authToken')) {
-        loginButton.innerHTML = `<a class="logout" href="index.html">Logout</a>`
-        const logout = document.querySelector('.logout');
-        const myProjects = document.querySelector('.my-projects');
-        logout.addEventListener('click', () => {
-            window.localStorage.removeItem('authToken');
-        })
-        const div = document.createElement('div');
-        div.className = 'edit'
-        div.innerHTML = '<i></i><span class="modify">Modifier</span>'
-        myProjects.appendChild(div);
+      loginButton.innerHTML = `<a class="logout" href="index.html">Logout</a>`;
+      
+      const logout = document.querySelector('.logout');
+      const myProjects = document.querySelector('.my-projects');
+      logout.addEventListener('click', () => {
+        window.localStorage.removeItem('authToken');
+      });
+      
+      const div = document.createElement('div');
+      div.className = 'edit';
+      div.innerHTML = '<i></i><span class="modify">Modifier</span>';
+      myProjects.appendChild(div);
+  
+      // Affiche la barre d'édition
+      editingBar.style.display = 'flex';
+  
+      // Ajoute la classe 'authenticated' à la balise <body>
+      body.classList.add('authenticated');
     } else {
-        loginButton.innerHTML = `<a href="login.html">Login</a>`
+      loginButton.innerHTML = `<a href="login.html">Login</a>`;
+      // Cache la barre d'édition
+      editingBar.style.display = 'none';
+  
+      // Supprime la classe 'authenticated' de la balise <body>
+      body.classList.remove('authenticated');
     }
-    //loginButton.innerHTML = window.localStorage.getItem('authToken') ? `<a href="index.html">Logout</a>` : `<a href="login.html">Login</a>`
-}
+  }
+  
+  
 
 function displayModal(works) {
     const modal = document.querySelector("#myModal");
@@ -213,6 +230,13 @@ function displayModalAdd() {
     const formSubmit = document.querySelector('#add-photo-form');
     const categories = document.querySelector('#category');
 
+    const closeIconAdd = document.createElement('span');
+    closeIconAdd.className = 'close close-add';
+    closeIconAdd.innerHTML = '&times;';
+
+    closeIconAdd.addEventListener('click', () => {
+        modalAdd.style.display = 'none';
+    });
 
     addPhotoButton.addEventListener('click', () => {
         modal.style.display = 'none';
@@ -238,7 +262,6 @@ function displayModalAdd() {
         })
         .then((categoriesData) => {
             categoriesData.map((category) => {
-                // Create Option with category
                 const option = document.createElement('option');
                 option.value = category.id;
                 option.textContent = category.name;
@@ -255,11 +278,26 @@ function displayModalAdd() {
     });
 }
 
+function previewImage() {
+    const icon = document.querySelector('.add-photo-container i');
+    const inputFile = document.querySelector('#image-url');
+    const preview = document.querySelector('#file-preview');
+    inputFile.addEventListener('change', (event) => {
+        if (event.target.files.length > 0) {
+            const image = URL.createObjectURL(event.target.files[0]);
+            preview.src = image;
+            // Icone display none;
+            icon.style.display = 'none';
+        }
+    })
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     fetchCategories();
     fetchWorks();
     checkAuth();
-    displayModalAdd()
+    displayModalAdd();
+    previewImage();
 });
 
 function handleFilters() {
@@ -316,3 +354,4 @@ function updateGalleryWithFilteredWorks(categoryId) {
         gallery.appendChild(figure);
     });
 }
+

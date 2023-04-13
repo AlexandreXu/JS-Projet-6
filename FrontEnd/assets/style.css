@@ -338,6 +338,10 @@ footer nav ul {
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
+.modal-photo {
+	padding: 105px;
+}
+
 .modal-photo, .modal-photo-add {
 	border-radius: 10px;
 	position: fixed;
@@ -549,6 +553,19 @@ footer nav ul {
 	color: #ff0000;
 }
 
+.submit-photo {
+	background-color: #1D6154;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #1D6154;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s, border-color 0.3s;
+
+}
+
 .modal-content .previous {
 	background-color: #1D6154;
 	color: #ffffff;
@@ -566,6 +583,25 @@ footer nav ul {
 	border-color: #147a50;
 }
 
+.modal-photo-add {
+    padding: 105px;
+}
+
+.modal-photo-add * + * {
+    margin-top: 47px;
+}
+
+.modal-photo-add hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.modal-photo-add button {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
 
 
 .trash-can {
@@ -698,3 +734,73 @@ body.login-page {
     padding: 0 10px;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
+.arrow-back {
+	position: absolute;
+	top: -30px;
+	left: 30px;
+	font-size: 1.5rem;
+	cursor: pointer;
+	color: #000;
+  }
+
+  .title-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 50%; /* La moitié de la hauteur de la modal */
+  }
+
+  #add-photo-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	height: 100%;
+  }
+  
+  .separator {
+	width: 100%;
+	height: 1px;
+	background-color: #B3B3B3;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+  }
+  
+  .editing-bar {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 59px;
+	background-color: #000;
+	color: #fff;
+	font-size: 18px;
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+  
+  .editing-bar i {
+	margin-right: 10px;
+  }
+  
+  .publish-changes {
+	background-color: #fff;
+	color: #000;
+	margin-left: 15px;
+	padding: 5px 10px;
+	border-radius: 20px;
+	border: none;
+	cursor: pointer;
+  }
+  
+  .publish-changes:hover {
+	background-color: #ccc;
+  }
+
+  body.authenticated {
+	padding-top: 59px;
+  }
