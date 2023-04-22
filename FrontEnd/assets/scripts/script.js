@@ -1,10 +1,5 @@
 let listWorks = [];
-let WorksFiltered = [];
 let currentSelectedCategoryId = null;
-let modalInitialized = false;
-const addPhotoButton = document.querySelector('.add-photo');
-const addPhotoModal = document.getElementById('add-photo-modal');
-const previousButton = document.querySelector('.previous');
 
 function fetchCategories() {
     fetch('http://localhost:5678/api/categories')
@@ -46,7 +41,7 @@ function fetchWorks() {
         .then((works) => {
             listWorks = works;
             updateGalleryWithFilteredWorks(null);
-            displayModal(works)
+            displayModal()
         })
         .catch((error) => {
             console.error('Erreur :', error);
@@ -69,7 +64,7 @@ function checkAuth() {
       
       const div = document.createElement('div');
       div.className = 'edit';
-      div.innerHTML = '<i></i><span class="modify">Modifier</span>';
+      div.innerHTML = '<i class="fas fa-pen-to-square"></i><span class="modify">Modifier</span>';
       myProjects.appendChild(div);
   
       // Affiche la barre d'édition
@@ -86,10 +81,8 @@ function checkAuth() {
       body.classList.remove('authenticated');
     }
   }
-  
-  
 
-function displayModal(works) {
+function displayModal() {
     const modal = document.querySelector("#myModal");
     const modify = document.querySelector(".modify");
     const close = document.querySelector(".close");
@@ -98,11 +91,10 @@ function displayModal(works) {
     modify.onclick = function () {
         modal.style.display = "block";
 
-        // Vide le contenu du conteneur .modal-items avant d'ajouter de nouveaux éléments
         modalItemsContainer.innerHTML = '';
 
         // Ajoute les images des works dans le conteneur .modal-items
-        works.forEach(work => {
+        listWorks.forEach(work => {
             const modalItem = document.createElement("div");
             modalItem.className = "modalItem";
             modalItem.style.position = "relative"; // Ligne pour permettre la position absolue de la corbeille
@@ -118,7 +110,6 @@ function displayModal(works) {
             trashCanContainer.addEventListener('click', () => {
                 const confirmation = confirm('Voulez-vous vraiment supprimer cette image et sa légende ?');
                 if (confirmation) {
-                    console.log(work.id);
                     deleteWork(work.id)
                     // Supprime l'image et sa légende du DOM
                     modalItem.remove();
@@ -126,7 +117,6 @@ function displayModal(works) {
                     listWorks = listWorks.filter(item => item.id !== work.id);
                     // Mettre à jour la galerie avec les works filtrés
                     updateGalleryWithFilteredWorks(currentSelectedCategoryId);
-                    console.log('Image et légende supprimées');
                 }
             });
 
@@ -137,9 +127,6 @@ function displayModal(works) {
             const title = document.createElement("figcaption");
             title.textContent = "Éditer";
             title.className = "edit-caption";
-            title.addEventListener("click", () => {
-                handleCaptionEditing(title, work);
-            });
             title.addEventListener("click", () => {
                 const existingEditInput = modalItem.querySelector(".edit-input");
                 const existingSaveButton = modalItem.querySelector(".save-button");
@@ -201,7 +188,6 @@ function addWork() {
         const title = document.querySelector('#title')
         const category = document.querySelector('#category')
         const image = document.querySelector('#image-url')
-
         formData.append('title', title.value);
         formData.append('category', category.value);
         formData.append('image', image.files[0]);
@@ -214,7 +200,11 @@ function addWork() {
                 headers: {'Authorization': `Bearer ${window.localStorage.getItem('authToken')}`}
             }
         ).then((response)=> {
-            // CHECK SI OK, SI OK ADD PHOTO EN TEMPS REEL
+            return response.json();
+        }).then((data) => {
+            listWorks.push(data);
+            updateGalleryWithFilteredWorks(null);
+            displayModal()
         })
     } catch (error) {
         console.log(error);
@@ -229,6 +219,8 @@ function displayModalAdd() {
     const addPhotoButton = document.querySelector('.add-photo');
     const formSubmit = document.querySelector('#add-photo-form');
     const categories = document.querySelector('#category');
+    const preview = document.querySelector('#file-preview');
+    const icon = document.querySelector('.add-photo-container i');
 
     const closeIconAdd = document.createElement('span');
     closeIconAdd.className = 'close close-add';
@@ -239,6 +231,9 @@ function displayModalAdd() {
     });
 
     addPhotoButton.addEventListener('click', () => {
+        preview.src = '';
+        icon.style.display = 'block'
+        formSubmit.reset();
         modal.style.display = 'none';
         modalAdd.style.display = 'block';
     })
@@ -272,10 +267,10 @@ function displayModalAdd() {
             console.error('Erreur :', error);
         });
 
-    formSubmit.addEventListener('submit', (e) => {
-        e.preventDefault();
-        addWork(new FormData(formSubmit))
-    });
+        formSubmit.addEventListener('submit', (e) => {
+            e.preventDefault();
+            addWork();
+        });
 }
 
 function previewImage() {
@@ -326,6 +321,7 @@ function handleFilters() {
 function updateGalleryWithFilteredWorks(categoryId) {
     const filteredWorks = categoryId ? listWorks.filter(work => work.category.id == categoryId) : listWorks;
     const gallery = document.querySelector('.gallery');
+
     gallery.innerHTML = '';
 
     filteredWorks.map(work => {

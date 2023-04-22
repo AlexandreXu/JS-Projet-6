@@ -804,3 +804,21 @@ body.login-page {
   body.authenticated {
 	padding-top: 59px;
   }
+  
+  .my-projects {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+  
+  .edit {
+	display: flex;
+	align-items: center;
+	margin-bottom: 2em;
+	margin-left: 1em;
+  }
+  
+  .modify {
+	margin-left: 4px;
+  }
+  
